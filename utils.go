@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
-	"reflect"
 )
 
 // CheckErr print Error and break the program
@@ -23,29 +22,13 @@ func GetFullFileName(fileName string) string {
 	ex, _ := os.Executable()
 	extFileName := filepath.Dir(ex) + "/" + fileName
 	if _, err := os.Stat(extFileName); os.IsNotExist(err) {
-		// пробуем из текуoей dir
+		// пробуем из текущей dir
 		extFileName = "./" + fileName
 		if _, err := os.Stat(extFileName); os.IsNotExist(err) {
 			CheckErr("Config file not found:", err)
 		}
 	}
 	return extFileName
-}
-
-// Содержит ли слайс элемент
-func Contains(s interface{}, elem interface{}) bool {
-	sVal := reflect.ValueOf(s)
-	if sVal.Kind() == reflect.Slice {
-		for i := 0; i < sVal.Len(); i++ {
-			// !!! panics if slice element points to an unexported struct field
-			// see https://golang.org/pkg/reflect/#Value.Interface
-			if sVal.Index(i).Interface() == elem {
-				return true
-			}
-		}
-	}
-
-	return false
 }
 
 // сделать GET
@@ -67,5 +50,4 @@ func RunGet(url string) error {
 	fmt.Printf("%#v", string(respBody))
 
 	return nil
-
 }
