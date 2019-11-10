@@ -1,7 +1,9 @@
 package slice
 
 import (
+	"log"
 	"reflect"
+	"strings"
 )
 
 // Содержит ли слайс элемент
@@ -19,12 +21,20 @@ func IsContains(s interface{}, elem interface{}) bool {
 	return false
 }
 
-//
+// Возвращает новый слайс из элементов aS  без bS
+// если элемент bS заканчивается на  "*"  - то шаблон
 func DeleteElements(aS []string, bS ...string) []string {
 	res := make([]string, 0, len(aS))
 	for _, a := range aS {
-		for _, b := range bS {
-			if a == b {
+		for j := 0; j < len(bS); j++ {
+			// если заканчивается на "*"
+			if bS[j][len(bS[j])-1:] == "*" {
+				// возьмем до звездочки
+				if strings.Contains(a, bS[j][:len(bS[j])-1]) {
+					log.Printf("!!!%v %v", a, bS[j][:len(bS[j])-1])
+					goto LOOP
+				}
+			} else if a == bS[j] {
 				goto LOOP
 			}
 		}
