@@ -1,7 +1,6 @@
 package slice
 
 import (
-	"log"
 	"reflect"
 	"strings"
 )
@@ -30,8 +29,8 @@ func DeleteElements(aS []string, bS ...string) []string {
 			// если заканчивается на "*"
 			if bS[j][len(bS[j])-1:] == "*" {
 				// возьмем до звездочки
-				if strings.Contains(a, bS[j][:len(bS[j])-1]) {
-					log.Printf("!!!%v %v", a, bS[j][:len(bS[j])-1])
+				if strings.HasPrefix(a, bS[j][:len(bS[j])-1]) {
+					//log.Printf("!!!%v %v", a, bS[j][:len(bS[j])-1])
 					goto LOOP
 				}
 			} else if a == bS[j] {
