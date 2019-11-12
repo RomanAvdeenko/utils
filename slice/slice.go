@@ -26,7 +26,10 @@ func DeleteElements(aS []string, bS ...string) []string {
 	res := make([]string, 0, len(aS))
 	for _, a := range aS {
 		for j := 0; j < len(bS); j++ {
-			// если заканчивается на "*"
+			// если заканчивается на "*" и длина больше одного символа
+			if len(bS[j]) < 2 {
+				continue
+			}
 			if bS[j][len(bS[j])-1:] == "*" {
 				// возьмем до звездочки
 				if strings.HasPrefix(a, bS[j][:len(bS[j])-1]) {
