@@ -9,26 +9,20 @@ import (
 	"path/filepath"
 )
 
-// CheckErr print Error and break the program
-func CheckErr(msg string, err error) {
-	if err != nil {
-		log.Fatalln("ERROR!!! ", msg, err.Error())
-	}
-}
-
 // GetFullFileName возвращает полное имя файла по именя файла
-func GetFullFileName(fileName string) string {
+func GetFullFileName(fileName string) (string, error) {
 	//Сначала откуда запускаем программу
 	ex, _ := os.Executable()
 	extFileName := filepath.Dir(ex) + "/" + fileName
+	var err error
 	if _, err := os.Stat(extFileName); os.IsNotExist(err) {
 		// пробуем из текущей dir
 		extFileName = "./" + fileName
 		if _, err := os.Stat(extFileName); os.IsNotExist(err) {
-			CheckErr("Config file not found:", err)
+			return "", fmt.Errorf("util.GetFullFileName(): %v", err)
 		}
 	}
-	return extFileName
+	return extFileName, fmt.Errorf("util.GetFullFileName(): %v", err)
 }
 
 // сделать GET
