@@ -29,7 +29,10 @@ func ExcludeInterfaces(in []net.Interface, excludeInterfaceNames []string) []net
 	return out
 }
 
-func Ip2int(ipAddr []byte) (uint32, error) {
+func Ip2int(ipAddr []byte) uint32 {
 	fmt.Printf("%v, len:%v\n", ipAddr, len(ipAddr))
-	return binary.BigEndian.Uint32(ipAddr), nil
+	if len(ipAddr) > 4 {
+		return binary.BigEndian.Uint32(ipAddr[len(ipAddr)-4:])
+	}
+	return binary.BigEndian.Uint32(ipAddr)
 }

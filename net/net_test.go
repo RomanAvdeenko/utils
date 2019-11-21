@@ -26,7 +26,7 @@ var tests = []struct {
 
 func TestIp2int(t *testing.T) {
 	for _, test := range tests {
-		if got, _ := Ip2int(test.input); got != test.want {
+		if got := Ip2int(test.input); got != test.want {
 			t.Error("input:", test.input, "got:", got, "want:", test.want)
 		}
 	}
