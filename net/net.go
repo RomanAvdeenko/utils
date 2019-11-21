@@ -34,5 +34,6 @@ func Ip2int(ipAddr string) (uint32, error) {
 	if ip == nil {
 		return 0, errors.New("wrong ipAddr format")
 	}
-	return binary.BigEndian.Uint32(ip.To4()), nil
+	ip = ip.To4()
+	return binary.BigEndian.Uint32(ip), nil
 }
