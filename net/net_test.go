@@ -3,27 +3,31 @@ package net
 import "testing"
 
 var tests = []struct {
-	input string
+	input []byte
 	want  uint32
 }{
 	{
-		"193.111.156.1",
+		[]byte("193.111.156.1"),
 		3245317121,
 	},
 	{
-		"192.168.1.203",
+		[]byte("192.168.1.203"),
 		3232235979,
 	},
 	{
-		"127.0.0.1",
+		[]byte("127.0.0.1"),
 		2130706433,
+	},
+	{
+		[]byte("255.255.255.0"),
+		4294967040,
 	},
 }
 
 func TestIp2int(t *testing.T) {
 	for _, test := range tests {
 		if got, _ := Ip2int(test.input); got != test.want {
-			t.Error("input:", test.input, "got:", got, "want:", test.want)
+			t.Error("input:", string(test.input), "got:", got, "want:", test.want)
 		}
 	}
 

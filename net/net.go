@@ -29,8 +29,8 @@ func ExcludeInterfaces(in []net.Interface, excludeInterfaceNames []string) []net
 	return out
 }
 
-func Ip2int(ipAddr string) (uint32, error) {
-	ip := net.ParseIP(ipAddr)
+func Ip2int(ipAddr []byte) (uint32, error) {
+	ip := net.ParseIP(string(ipAddr))
 	if ip == nil {
 		return 0, errors.New("wrong ipAddr format")
 	}
