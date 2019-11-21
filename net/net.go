@@ -2,7 +2,6 @@ package net
 
 import (
 	"encoding/binary"
-	"errors"
 	"github.com/RomanAvdeenko/utils/slice"
 	"net"
 )
@@ -30,10 +29,10 @@ func ExcludeInterfaces(in []net.Interface, excludeInterfaceNames []string) []net
 }
 
 func Ip2int(ipAddr []byte) (uint32, error) {
-	ip := net.ParseIP(string(ipAddr))
+	//ip := net.ParseIP(string(ipAddr))
 	//fmt.Printf("%#v\n", len(ip))
-	if ip == nil {
-		return 0, errors.New("wrong ipAddr format")
-	}
-	return binary.BigEndian.Uint32(ip.To4()), nil
+	//if ip == nil {
+	//	return 0, errors.New("wrong ipAddr format")
+	//}
+	return binary.BigEndian.Uint32(ipAddr), nil
 }
