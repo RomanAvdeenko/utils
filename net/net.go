@@ -4,6 +4,7 @@ import (
 	"encoding/binary"
 	"errors"
 	"github.com/RomanAvdeenko/utils/slice"
+	"log"
 	"net"
 )
 
@@ -35,5 +36,6 @@ func Ip2int(ipAddr string) (uint32, error) {
 		return 0, errors.New("wrong ipAddr format")
 	}
 	ip = ip.To4()
+	log.Panicln(ip)
 	return binary.BigEndian.Uint32(ip), nil
 }
