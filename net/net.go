@@ -1,6 +1,7 @@
 package net
 
 import (
+	"encoding/binary"
 	"github.com/RomanAvdeenko/utils/slice"
 	"net"
 )
@@ -25,4 +26,8 @@ func ExcludeInterfaces(in []net.Interface, excludeInterfaceNames []string) []net
 		}
 	}
 	return out
+}
+
+func Ip2int(ip net.IP) uint32 {
+	return binary.BigEndian.Uint32(ip.To4())
 }
