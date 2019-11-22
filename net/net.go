@@ -41,10 +41,8 @@ func Broadcast(ipNet net.IPNet) net.IP {
 	brd := make(net.IP, net.IPv4len)
 	n := len(ipNet.IP)
 	//fmt.Println(n)
-
 	if n > net.IPv4len {
 		for i := 0; i < net.IPv4len; i++ {
-			fmt.Println(">4")
 			brd[i] = ipNet.IP[n-net.IPv4len+i] | ^ipNet.Mask[i]
 		}
 		return brd
