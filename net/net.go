@@ -2,7 +2,6 @@ package net
 
 import (
 	"encoding/binary"
-	"fmt"
 	"github.com/RomanAvdeenko/utils/slice"
 	"net"
 )
@@ -30,7 +29,7 @@ func ExcludeInterfaces(in []net.Interface, excludeInterfaceNames []string) []net
 }
 
 func Ip2int(ipAddr []byte) uint32 {
-	fmt.Printf("%v, len:%v\n", ipAddr, len(ipAddr))
+	//fmt.Printf("%v, len:%v\n", ipAddr, len(ipAddr))
 	if len(ipAddr) > net.IPv4len {
 		return binary.BigEndian.Uint32(ipAddr[len(ipAddr)-net.IPv4len:])
 	}
