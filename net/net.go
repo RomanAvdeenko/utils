@@ -35,3 +35,12 @@ func Ip2int(ipAddr []byte) uint32 {
 	}
 	return binary.BigEndian.Uint32(ipAddr)
 }
+
+func Broadcast(ipNet net.IPNet) net.IP {
+	n := len(ipNet.IP)
+	brd := make(net.IP, n)
+	for i := 0; i < n; i++ {
+		brd[i] = ipNet.IP[i] | ^ipNet.Mask[i]
+	}
+	return brd
+}

@@ -1,8 +1,12 @@
 package net
 
-import "testing"
+import (
+	"bytes"
+	"net"
+	"testing"
+)
 
-var tests = []struct {
+var testIp2int = []struct {
 	input []byte
 	want  uint32
 }{
@@ -24,9 +28,41 @@ var tests = []struct {
 	},
 }
 
+var testBroadcast = []struct {
+	input net.IPNet
+	want  net.IP
+}{
+	{
+		net.IPNet{
+			[]byte{193, 111, 156, 10}, []byte{255, 255, 255, 224},
+		},
+		[]byte{193, 111, 156, 31},
+	},
+	{
+		net.IPNet{
+			[]byte{91, 192, 159, 2}, []byte{255, 255, 255, 240},
+		},
+		[]byte{91, 192, 159, 15},
+	},
+	{
+		net.IPNet{
+			[]byte{192, 168, 0, 24}, []byte{255, 255, 255, 0},
+		},
+		[]byte{192, 168, 0, 255},
+	},
+}
+
 func TestIp2int(t *testing.T) {
-	for _, test := range tests {
+	for _, test := range testIp2int {
 		if got := Ip2int(test.input); got != test.want {
+			t.Error("input:", test.input, "got:", got, "want:", test.want)
+		}
+	}
+}
+
+func TestBroadcast(t *testing.T) {
+	for _, test := range testBroadcast {
+		if got := Broadcast(test.input); !bytes.Equal(got, test.want) {
 			t.Error("input:", test.input, "got:", got, "want:", test.want)
 		}
 	}
