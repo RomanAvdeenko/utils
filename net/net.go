@@ -2,6 +2,7 @@ package net
 
 import (
 	"encoding/binary"
+	"errors"
 	"github.com/RomanAvdeenko/utils/slice"
 	"net"
 )
@@ -36,6 +37,7 @@ func Ip2int(ipAddr []byte) uint32 {
 	return binary.BigEndian.Uint32(ipAddr)
 }
 
+//Возващает brd IP адрес, CIDR-адреса
 func Broadcast(ipNet net.IPNet) net.IP {
 	brd := make(net.IP, net.IPv4len)
 	n := len(ipNet.IP)
@@ -50,4 +52,35 @@ func Broadcast(ipNet net.IPNet) net.IP {
 		brd[i] = ipNet.IP[i] | ^ipNet.Mask[i]
 	}
 	return brd
+}
+
+// Возващает IP адреса, CIDR-адреса за исключением  IP: сетиб brd и самого его
+func IPs(addr net.Addr) ([]uint32, error) {
+	var ips = []uint32{}
+	ipNet, ok := addr.(*net.IPNet)
+	if !ok {
+		return []uint32{}, errors.New("getIP() type assertion error")
+	}
+	// Цикл по uint32 представлениям IP от netIP+1 до brd IP
+	uint32Ip := Ip2int(ipNet.IP)
+	uint32NetIp := Ip2int(ipNet.IP.Mask(ipNet.Mask))
+	uint32Brd := Ip2int(Broadcast(*ipNet))
+	//fmt.Printf("ip: %v\nnetIP: %v\nbrd ip: %v\n", uint32Ip, uint32NetIp, uint32Brd)
+	n := uint32Brd - uint32NetIp + 1
+	// /32 или /31 нет элементов
+	if n < 4 {
+		return []uint32{}, nil
+	}
+	// Уменишим размер на net ip brd
+	n -= 3
+	var c uint32
+	ips = make([]uint32, n)
+	for i := uint32NetIp + 1; i < uint32Brd; i++ {
+		// Исключим ip интерфейса
+		if i != uint32Ip {
+			ips[c] = i
+			c++
+		}
+	}
+	return ips, nil
 }
