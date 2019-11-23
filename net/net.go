@@ -39,7 +39,7 @@ func Ip2int(ipAddr []byte) uint32 {
 }
 
 // Возвращает []byte представление IP
-func ip2bytes(ip uint32) []byte {
+func Ip2bytes(ip uint32) []byte {
 	res := make([]byte, 4)
 	res[0] = byte(ip)
 	res[1] = byte(ip >> 8)
