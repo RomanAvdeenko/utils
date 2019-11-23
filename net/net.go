@@ -29,12 +29,23 @@ func ExcludeInterfaces(in []net.Interface, excludeInterfaceNames []string) []net
 	return out
 }
 
+// Возвращает uint32 предсьавление IP
 func Ip2int(ipAddr []byte) uint32 {
 	//fmt.Printf("%v, len:%v\n", ipAddr, len(ipAddr))
 	if len(ipAddr) > net.IPv4len {
 		return binary.BigEndian.Uint32(ipAddr[len(ipAddr)-net.IPv4len:])
 	}
 	return binary.BigEndian.Uint32(ipAddr)
+}
+
+// Возвращает []byte представление IP
+func ip2bytes(ip uint32) []byte {
+	res := make([]byte, 4)
+	res[0] = byte(ip)
+	res[1] = byte(ip >> 8)
+	res[2] = byte(ip >> 16)
+	res[3] = byte(ip >> 24)
+	return res
 }
 
 //Возващает brd IP адрес, CIDR-адреса
