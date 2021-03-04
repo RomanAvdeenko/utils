@@ -8,6 +8,12 @@ import (
 	"github.com/RomanAvdeenko/utils/slice"
 )
 
+type uintIP uint32
+
+func (v uintIP) String() string {
+	return string(Ip2bytes(uint32(v)))
+}
+
 func ExcludeInterfaces(in []net.Interface, excludeInterfaceNames []string) []net.Interface {
 	// Get router interface names
 	out := make([]net.Interface, 0, len(in))
