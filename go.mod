@@ -1,3 +1,3 @@
-module github.com/RomanAvdeenko/utils
+module utils
 
 go 1.16
