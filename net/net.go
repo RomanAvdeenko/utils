@@ -14,6 +14,10 @@ func (v UintIP) String() string {
 	return string(Ip2bytes(uint32(v)))
 }
 
+func (v UintIP) GoString() string {
+	return string(Ip2bytes(uint32(v)))
+}
+
 func ExcludeInterfaces(in []net.Interface, excludeInterfaceNames []string) []net.Interface {
 	// Get router interface names
 	out := make([]net.Interface, 0, len(in))
