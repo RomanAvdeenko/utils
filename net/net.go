@@ -51,6 +51,9 @@ func Ip2int(ipAddr []byte) uint32 {
 
 // Возвращает []byte представление IP
 func Ip2bytes(ip uint32) []byte {
+	if ip == 0 {
+		return nil
+	}
 	res := make([]byte, 4)
 	res[3] = byte(ip)
 	res[2] = byte(ip >> 8)
