@@ -8,9 +8,9 @@ import (
 	"github.com/RomanAvdeenko/utils/slice"
 )
 
-type uintIP uint32
+type UintIP uint32
 
-func (v uintIP) String() string {
+func (v UintIP) String() string {
 	return string(Ip2bytes(uint32(v)))
 }
 
