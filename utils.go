@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 )
 
-// GetFullFileName возвращает полное имя файла по именя файла
+// GetFullFileName возвращает полное имя файла по имени файла
 func GetFullFileName(fileName string) (string, error) {
 	//Сначала откуда запускаем программу
 	ex, _ := os.Executable()

@@ -3,8 +3,9 @@ package net
 import (
 	"encoding/binary"
 	"errors"
-	"github.com/RomanAvdeenko/utils/slice"
 	"net"
+
+	"github.com/RomanAvdeenko/utils/slice"
 )
 
 func ExcludeInterfaces(in []net.Interface, excludeInterfaceNames []string) []net.Interface {
@@ -29,7 +30,7 @@ func ExcludeInterfaces(in []net.Interface, excludeInterfaceNames []string) []net
 	return out
 }
 
-// Возвращает uint32 предсьавление IP
+// Возвращает uint32 представление IP
 func Ip2int(ipAddr []byte) uint32 {
 	//fmt.Printf("%v, len:%v\n", ipAddr, len(ipAddr))
 	if len(ipAddr) > net.IPv4len {
@@ -65,7 +66,7 @@ func Broadcast(ipNet net.IPNet) net.IP {
 	return brd
 }
 
-// Возващает IP адреса, CIDR-адреса за исключением  IP: сетиб brd и самого его
+// Возващает IP адреса, CIDR-адреса за исключением  IP: сети, brd и самого его
 func IPs(addr net.Addr) ([]uint32, error) {
 	var ips = []uint32{}
 	ipNet, ok := addr.(*net.IPNet)
